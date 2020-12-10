@@ -1,0 +1,8 @@
+export const defaultTheme = {
+    mode: "light",
+    PRIMARY_HEADER_COLOR: '#5A83FF',
+    PRIMARY_HEADER_TEXT_COLOR: '#FFFFFF',
+    PRIMARY_BACKGROUND_COLOR: '#7DBEE4',
+    DEFAULT_BORDER_COLOR: '#C3C4C9',
+    SELECTED_BORDER_COLOR: '#918AE4'
+}
