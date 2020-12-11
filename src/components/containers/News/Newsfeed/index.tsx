@@ -1,20 +1,11 @@
 import React from 'react';
-import {View, FlatList} from 'react-native';
-import {RootState} from '../../../../store';
-import {News} from '../../../../types/News';
-import ArticleItem from '../../../common/ArticleItem';
-import {useSelector} from 'react-redux';
+import {View} from 'react-native';
+import NewsList from './NewsList';
 
 const Newsfeed: React.FC = () => {
-  const feed: Array<News> = useSelector((state: RootState) => state.news.list);
-
   return (
     <View>
-      <FlatList<News>
-        keyExtractor={(row) => row.uri}
-        renderItem={({item}) => <ArticleItem {...item} />}
-        data={feed}
-      />
+      <NewsList />
     </View>
   );
 };
