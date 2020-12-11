@@ -1,27 +1,36 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
-import {IKeyLabel} from '../../../../constants/common';
-import {sectionKeys, sectionSelect} from '../../../../constants/sections';
-import {defaultFontSize} from '../../../../styles/font';
-import {defaultTheme} from '../../../../styles/theme';
+import React from 'react';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+
 import SectionButton from '../../../common/SectionButton';
 
+import {defaultFontSize} from '../../../../styles/font';
+import {defaultTheme} from '../../../../styles/theme';
+
+import {IKeyLabel} from '../../../../constants/common';
+import {sectionSelect} from '../../../../constants/sections';
+import {newsSliceActions} from '../../../../store/slices/news';
+import {RootState} from '../../../../store';
+
 const Sections: React.FC = () => {
-  const [selected, setSelected] = useState<string>(sectionKeys.world);
+  const sectionFilter = useSelector(
+    (state: RootState) => state.news.sectionFilter,
+  );
+  const dispatch = useDispatch();
+
   const firstRow = sectionSelect.slice(0, 13);
   const secondRow = sectionSelect.slice(13);
 
-  useEffect(() => {
-    console.log('Call NYTimes API for section: ', selected);
-  }, [selected]);
+  const onSectionChange = (section: string) => {
+    dispatch(newsSliceActions.setSectionFilter(section));
+  };
 
   const renderRow = (rows: Array<IKeyLabel>) => {
     return rows.map((item) => {
       return (
         <SectionButton
-          onPress={() => setSelected(item.key)}
-          selected={selected === item.key}
+          onPress={() => onSectionChange(item.key)}
+          selected={sectionFilter === item.key}
           label={item.label}
         />
       );
