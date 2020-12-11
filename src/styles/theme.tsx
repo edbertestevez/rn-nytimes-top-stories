@@ -9,6 +9,8 @@ export const defaultTheme = {
   PRIMARY_TEXT_COLOR: '#1D1F27',
   PRIMARY_BUTTON_COLOR: '#FFFFFF',
   PRIMARY_CARD_COLOR: '#FFFFFF',
+  PRIMARY_INPUT_BACKGROUND_COLOR: '#FFFFFF',
+  SECONDARY_BACKGROUND_COLOR: '#76C0E3',
 };
 
 export type ThemeType = typeof defaultTheme;

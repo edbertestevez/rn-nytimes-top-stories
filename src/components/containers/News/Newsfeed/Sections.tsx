@@ -29,6 +29,7 @@ const Sections: React.FC = () => {
     return rows.map((item) => {
       return (
         <SectionButton
+          key={item.key}
           onPress={() => onSectionChange(item.key)}
           selected={sectionFilter === item.key}
           label={item.label}
@@ -57,7 +58,7 @@ export default Sections;
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 12,
+    paddingTop: 12,
     backgroundColor: defaultTheme.DEFAULT_BACKGROUND_COLOR,
   },
   title: {

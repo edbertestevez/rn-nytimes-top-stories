@@ -13,6 +13,7 @@ import {
 import {RequestMethods} from '../../../../constants/common';
 import {RootState} from '../../../../store';
 import {newsSliceActions} from '../../../../store/slices/news';
+import SearchArea from './SearchArea';
 
 const Newsfeed: React.FC = () => {
   const sectionFilter = useSelector(
@@ -32,6 +33,7 @@ const Newsfeed: React.FC = () => {
   return (
     <View>
       <Sections />
+      <SearchArea />
 
       {requestHook.loading ? (
         <ActivityIndicator color={'#000'} size={32} />
