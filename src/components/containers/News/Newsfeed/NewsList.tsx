@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {RootState} from '../../../../store';
 import {News} from '../../../../types/News';
 import ArticleItem from '../../../common/ArticleItem';
@@ -19,15 +19,27 @@ const NewsList: React.FC = () => {
   );
 
   return (
-    <View>
+    <View style={styles.container}>
       <FlatList<News>
         keyExtractor={(row) => row.uri}
         renderItem={({item}) => <ArticleItem {...item} />}
         data={searchResult}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.listContent}
       />
     </View>
   );
 };
 
 export default NewsList;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#77CFE8',
+  },
+  listContent: {
+    paddingTop: 8,
+    paddingBottom: 20,
+  },
+});

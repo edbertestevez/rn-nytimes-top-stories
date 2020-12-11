@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import NewsList from './NewsList';
@@ -31,12 +31,12 @@ const Newsfeed: React.FC = () => {
   }, [sectionFilter, dispatch, requestHook.data]);
 
   return (
-    <View>
+    <View style={styles.container}>
       <Sections />
       <SearchArea />
 
       {requestHook.loading ? (
-        <ActivityIndicator color={'#000'} size={32} />
+        <ActivityIndicator style={styles.loader} color={'#000'} size={32} />
       ) : (
         <NewsList />
       )}
@@ -45,3 +45,12 @@ const Newsfeed: React.FC = () => {
 };
 
 export default Newsfeed;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  loader: {
+    marginTop: 16,
+  },
+});

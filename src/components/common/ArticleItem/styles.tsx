@@ -8,6 +8,7 @@ export const ArticleView = styled.TouchableOpacity`
   margin-horizontal: 12px;
   margin-vertical: 6px;
   padding: 12px;
+  border-radius: 8px;
 `;
 
 export const DetailsPreview = styled.View`
