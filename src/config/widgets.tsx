@@ -1,0 +1,1 @@
+export const DEFAULT_TOUCHABLE_OPACITY = 0.7;
