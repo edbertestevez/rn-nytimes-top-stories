@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import styled from 'styled-components/native';
 
 import NewsList from './NewsList';
 import Sections from './Sections';
@@ -14,6 +14,15 @@ import {RequestMethods} from '../../../../constants/common';
 import {RootState} from '../../../../store';
 import {newsSliceActions} from '../../../../store/slices/news';
 import SearchArea from './SearchArea';
+
+//Styled Definition
+const Container = styled.View`
+  flex: 1;
+`;
+
+const Loader = styled.ActivityIndicator`
+  margin-top: 16;
+`;
 
 const Newsfeed: React.FC = () => {
   const sectionFilter = useSelector(
@@ -31,26 +40,13 @@ const Newsfeed: React.FC = () => {
   }, [sectionFilter, dispatch, requestHook.data]);
 
   return (
-    <View style={styles.container}>
+    <Container>
       <Sections />
       <SearchArea />
 
-      {requestHook.loading ? (
-        <ActivityIndicator style={styles.loader} color={'#000'} size={32} />
-      ) : (
-        <NewsList />
-      )}
-    </View>
+      {requestHook.loading ? <Loader color={'#000'} size={32} /> : <NewsList />}
+    </Container>
   );
 };
 
 export default Newsfeed;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  loader: {
-    marginTop: 16,
-  },
-});

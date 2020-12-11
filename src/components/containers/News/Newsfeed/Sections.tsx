@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View} from 'react-native';
+import styled from 'styled-components/native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import SectionButton from '../../../common/SectionButton';
@@ -11,6 +12,26 @@ import {IKeyLabel} from '../../../../constants/common';
 import {sectionSelect} from '../../../../constants/sections';
 import {newsSliceActions} from '../../../../store/slices/news';
 import {RootState} from '../../../../store';
+
+//Styled Definition
+const Container = styled.View`
+  padding-top: 12px;
+  background-color: ${defaultTheme.DEFAULT_BACKGROUND_COLOR};
+`;
+
+const Title = styled.Text`
+  font-size: ${defaultFontSize.TITLE}px;
+  padding-left: 12px;
+`;
+
+const ScrollArea = styled.ScrollView`
+  padding-vertical: 12px;
+`;
+
+const SectionRow = styled.View`
+  flex-direction: row;
+  padding-left: 12px;
+`;
 
 const Sections: React.FC = () => {
   const sectionFilter = useSelector(
@@ -39,37 +60,16 @@ const Sections: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Section</Text>
-      <ScrollView
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-        style={styles.scrollArea}>
+    <Container>
+      <Title>Section</Title>
+      <ScrollArea showsHorizontalScrollIndicator={false} horizontal={true}>
         <View>
-          <View style={styles.sectionRow}>{renderRow(firstRow)}</View>
-          <View style={styles.sectionRow}>{renderRow(secondRow)}</View>
+          <SectionRow>{renderRow(firstRow)}</SectionRow>
+          <SectionRow>{renderRow(secondRow)}</SectionRow>
         </View>
-      </ScrollView>
-    </View>
+      </ScrollArea>
+    </Container>
   );
 };
 
 export default Sections;
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 12,
-    backgroundColor: defaultTheme.DEFAULT_BACKGROUND_COLOR,
-  },
-  title: {
-    fontSize: defaultFontSize.TITLE,
-    paddingLeft: 12,
-  },
-  scrollArea: {
-    paddingVertical: 12,
-  },
-  sectionRow: {
-    flexDirection: 'row',
-    paddingLeft: 12,
-  },
-});

@@ -1,26 +1,29 @@
 import React from 'react';
+import {ViewStyle} from 'react-native';
 import {DEFAULT_TOUCHABLE_OPACITY} from '../../../config/widgets';
 import {ButtonContainer, ButtonText} from './styles';
 
-export interface ISectionProps {
+export interface IButtonProps {
   width?: number;
   height?: number;
-  selected: boolean;
+  color?: string;
+  bgColor?: string;
+  style: ViewStyle;
 }
 
-interface IProps extends ISectionProps {
+interface IProps extends IButtonProps {
   label: string;
   onPress: () => void;
 }
 
-const SectionButton: React.FC<IProps> = (props) => {
-  let {label, selected} = props;
+const AppButton: React.FC<IProps> = (props) => {
+  let {label} = props;
 
   return (
     <ButtonContainer activeOpacity={DEFAULT_TOUCHABLE_OPACITY} {...props}>
-      <ButtonText selected={selected}>{label}</ButtonText>
+      <ButtonText {...props}>{label}</ButtonText>
     </ButtonContainer>
   );
 };
 
-export default SectionButton;
+export default AppButton;

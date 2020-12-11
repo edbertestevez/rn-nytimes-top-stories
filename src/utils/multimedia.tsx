@@ -12,5 +12,5 @@ export const get_multimedia_by_format = (
   media: Array<IMultimedia>,
   size: MediaSize,
 ) => {
-  return media.filter((item: IMultimedia) => item.format === size)[0].url;
+  return media.filter((item: IMultimedia) => item.format === size)[0];
 };

@@ -22,7 +22,7 @@ const AppNavigation = () => {
         initialRouteName={AppRoutes.NEWSFEED}
         screenOptions={{
           headerStyle: {backgroundColor: defaultTheme.PRIMARY_HEADER_COLOR},
-          headerTintColor: defaultTheme.PRIMARY_HEADER_TEXT_COLOR
+          headerTintColor: defaultTheme.PRIMARY_HEADER_TEXT_COLOR,
         }}>
         <Stack.Screen
           name={AppRoutes.NEWSFEED}

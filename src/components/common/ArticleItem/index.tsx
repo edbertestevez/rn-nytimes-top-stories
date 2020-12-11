@@ -6,13 +6,17 @@ import {get_multimedia_by_format, MediaSize} from '../../../utils/multimedia';
 import {DEFAULT_TOUCHABLE_OPACITY} from '../../../config/widgets';
 import TimeAgo from 'react-timeago';
 
-const ArticleItem: React.FC<News> = (props: News) => {
-  let {title, multimedia, byline, published_date} = props;
-  let imageUrl = get_multimedia_by_format(multimedia, MediaSize.LARGE);
+interface IProps extends News {
+  onPress: () => void;
+}
+
+const ArticleItem: React.FC<IProps> = (props: IProps) => {
+  let {title, multimedia, byline, published_date, onPress} = props;
+  let mediaImage = get_multimedia_by_format(multimedia, MediaSize.LARGE);
 
   return (
-    <ArticleView activeOpacity={DEFAULT_TOUCHABLE_OPACITY}>
-      <ThumbnailPreview source={{uri: imageUrl}} />
+    <ArticleView onPress={onPress} activeOpacity={DEFAULT_TOUCHABLE_OPACITY}>
+      <ThumbnailPreview source={{uri: mediaImage.url}} />
 
       <DetailsPreview>
         <Title numberOfLines={2}>{title}</Title>
