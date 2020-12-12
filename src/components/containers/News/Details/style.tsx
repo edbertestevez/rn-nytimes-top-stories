@@ -13,7 +13,7 @@ export const Media = styled.Image`
 `;
 
 export const Content = styled.View`
-  padding-horizontal: 20;
+  padding-horizontal: 20px;
 `;
 
 export const Caption = styled.Text`
@@ -39,6 +39,6 @@ export const InfoLabel = styled.Text`
 
 export const Abstract = styled.Text`
   font-size: ${defaultFontSize.MEDIUM}px;
-  padding-vertical: 16;
-  margin-bottom: 80;
+  padding-vertical: 16px;
+  margin-bottom: 80px;
 `;

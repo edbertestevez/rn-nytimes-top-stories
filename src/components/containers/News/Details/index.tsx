@@ -43,7 +43,7 @@ const Details: React.FC<IProps> = (props) => {
 
   return (
     <ScrollContainer contentContainerStyle={{paddingBottom: 20}}>
-      <Media source={{uri: mediaImage.url}} />
+      <Media resizeMode={'cover'} source={{uri: mediaImage.url}} />
 
       <Content>
         {mediaImage.caption && <Caption>Caption: {mediaImage.caption}</Caption>}

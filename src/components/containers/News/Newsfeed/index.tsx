@@ -21,7 +21,7 @@ const Container = styled.View`
 `;
 
 const Loader = styled.ActivityIndicator`
-  margin-top: 16;
+  margin-top: 16px;
 `;
 
 const Newsfeed: React.FC = () => {
@@ -31,20 +31,20 @@ const Newsfeed: React.FC = () => {
   const dispatch = useDispatch();
 
   let storiesUrl = `${NYTIMES_API_STORIES_ENDPOINT}${sectionFilter}.json?api-key=${NYTIMES_API_KEY}`;
-  let requestHook = useHttpRequest(storiesUrl, RequestMethods.GET);
+  let {request, isLoading} = useHttpRequest(storiesUrl, RequestMethods.GET);
 
   useEffect(() => {
-    if (requestHook.data) {
-      dispatch(newsSliceActions.setList(requestHook.data.results));
+    if (request.data) {
+      dispatch(newsSliceActions.setList(request.data.results));
     }
-  }, [sectionFilter, dispatch, requestHook.data]);
+  }, [sectionFilter, dispatch, request.data]);
 
   return (
     <Container>
       <Sections />
       <SearchArea />
 
-      {requestHook.loading ? <Loader color={'#000'} size={32} /> : <NewsList />}
+      {isLoading ? <Loader color={'#000'} size={32} /> : <NewsList />}
     </Container>
   );
 };

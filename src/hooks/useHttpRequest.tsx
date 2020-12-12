@@ -3,14 +3,13 @@ import {useState, useEffect} from 'react';
 import {RequestMethods} from '../constants/common';
 
 interface IRequest {
-  loading: boolean;
   data: any | null;
   error: boolean;
 }
 
 const useHttpRequest = (url: string, method: string, body?: object) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [request, setRequest] = useState<IRequest>({
-    loading: false,
     data: null,
     error: false,
   });
@@ -18,11 +17,7 @@ const useHttpRequest = (url: string, method: string, body?: object) => {
   useEffect(() => {
     let apiRequest = null;
 
-    setRequest({
-      loading: true,
-      data: null,
-      error: false,
-    });
+    setIsLoading(true);
 
     switch (method) {
       case RequestMethods.POST: {
@@ -47,21 +42,23 @@ const useHttpRequest = (url: string, method: string, body?: object) => {
     apiRequest
       ?.then((response: AxiosResponse<Response>) => {
         setRequest({
-          loading: false,
           data: response.data,
           error: false,
         });
+
+        setIsLoading(false);
       })
       .catch(() => {
         setRequest({
-          loading: false,
           data: null,
           error: true,
         });
+
+        setIsLoading(false);
       });
   }, [url, method, body]);
 
-  return request;
+  return {request, isLoading};
 };
 
 export default useHttpRequest;
