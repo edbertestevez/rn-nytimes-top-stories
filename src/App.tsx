@@ -12,18 +12,21 @@ import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import AppNavigation from './navigation/AppNavigation';
 import {Provider} from 'react-redux';
-import {store} from './store';
+import {persistor, store} from './store';
 import {ThemeProvider} from 'styled-components';
 import {defaultTheme} from './styles/theme';
+import {PersistGate} from 'redux-persist/integration/react';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={defaultTheme}>
-        <SafeAreaView style={styles.container}>
-          <AppNavigation />
-        </SafeAreaView>
-      </ThemeProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={defaultTheme}>
+          <SafeAreaView style={styles.container}>
+            <AppNavigation />
+          </SafeAreaView>
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   );
 };

@@ -20,6 +20,7 @@ import {
   InfoLabel,
 } from './style';
 import {defaultTheme} from '../../../../styles/theme';
+import {DEFAULT_IMAGE_URI} from '../../../../config/widgets';
 
 type DetailsRouteProps = RouteProp<NewsStackParams, AppRoutes.NEWS_DETAILS>;
 
@@ -43,14 +44,18 @@ const Details: React.FC<IProps> = (props) => {
 
   return (
     <ScrollContainer contentContainerStyle={{paddingBottom: 20}}>
-      <Media resizeMode={'cover'} source={{uri: mediaImage.url}} />
+      <Media
+        resizeMode={'cover'}
+        source={{uri: mediaImage ? mediaImage.url : DEFAULT_IMAGE_URI}}
+      />
 
       <Content>
-        {mediaImage.caption ? (
-          <Caption>Caption: {mediaImage.caption}</Caption>
-        ) : (
-          <React.Fragment />
-        )}
+        {mediaImage &&
+          (mediaImage.caption ? (
+            <Caption>Caption: {mediaImage.caption}</Caption>
+          ) : (
+            <React.Fragment />
+          ))}
 
         <Title>{title}</Title>
         <InfoLabel>{byline}</InfoLabel>

@@ -42,8 +42,6 @@ export const newsSlice = createSlice({
           [state.sectionFilter]: action.payload,
         };
       }
-
-      // state.list = [];
     },
     setSectionFilter: (state, action: PayloadAction<string>) => {
       state.sectionFilter = action.payload;

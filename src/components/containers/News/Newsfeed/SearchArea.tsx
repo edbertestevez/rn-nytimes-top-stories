@@ -12,7 +12,7 @@ const Container = styled.View`
   padding: 12px;
 `;
 
-const SearchArea: React.FC = () => {
+const SearchArea: React.FC = React.memo(() => {
   const keywordFilter: string = useSelector(
     (state: RootState) => state.news.keywordFilter,
   );
@@ -31,6 +31,6 @@ const SearchArea: React.FC = () => {
       />
     </Container>
   );
-};
+});
 
 export default SearchArea;

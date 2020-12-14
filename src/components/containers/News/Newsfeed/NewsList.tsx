@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {FlatList, StyleSheet, ActivityIndicator} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {RootState} from '../../../../store';
 import {News} from '../../../../types/News';
 import ArticleItem from '../../../common/ArticleItem';
@@ -16,18 +16,6 @@ const Container = styled.View`
   background-color: #77cfe8;
 `;
 
-const Refresh = styled.View`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-top: 16px;
-`;
-
-const LoaderText = styled.Text`
-  color: #fff;
-  margin-left: 8px;
-`;
-
 const styles = StyleSheet.create({
   listContent: {
     paddingTop: 8,
@@ -35,7 +23,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const NewsList: React.FC<{showLoader: boolean}> = ({showLoader}) => {
+const NewsList: React.FC = React.memo(() => {
   const newsData: INews = useSelector((state: RootState) => state.news);
 
   const {sectionList, sectionFilter, keywordFilter} = newsData;
@@ -52,13 +40,6 @@ const NewsList: React.FC<{showLoader: boolean}> = ({showLoader}) => {
 
   return (
     <Container>
-      {showLoader && (
-        <Refresh>
-          <ActivityIndicator color={'#fff'} size={32} />
-          <LoaderText>Refreshing list</LoaderText>
-        </Refresh>
-      )}
-
       <FlatList<News>
         keyExtractor={(row) => row.uri}
         renderItem={({item}) => (
@@ -77,6 +58,6 @@ const NewsList: React.FC<{showLoader: boolean}> = ({showLoader}) => {
       />
     </Container>
   );
-};
+});
 
 export default NewsList;

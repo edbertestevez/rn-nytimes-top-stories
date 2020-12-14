@@ -33,7 +33,7 @@ const SectionRow = styled.View`
   padding-left: 12px;
 `;
 
-const Sections: React.FC = () => {
+const Sections: React.FC = React.memo(() => {
   const sectionFilter = useSelector(
     (state: RootState) => state.news.sectionFilter,
   );
@@ -70,6 +70,6 @@ const Sections: React.FC = () => {
       </ScrollArea>
     </Container>
   );
-};
+});
 
 export default Sections;

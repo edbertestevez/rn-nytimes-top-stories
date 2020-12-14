@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {ActivityIndicator} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components/native';
 
@@ -14,10 +15,24 @@ import {RequestMethods} from '../../../../constants/common';
 import {RootState} from '../../../../store';
 import {newsSliceActions} from '../../../../store/slices/news';
 import SearchArea from './SearchArea';
+import {News} from '../../../../types/News';
 
 //Styled Definition
 const Container = styled.View`
   flex: 1;
+`;
+
+const Refresh = styled.View`
+  background-color: #77cfe8;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 16px;
+`;
+
+const LoaderText = styled.Text`
+  color: #fff;
+  margin-left: 8px;
 `;
 
 const Newsfeed: React.FC = () => {
@@ -30,9 +45,22 @@ const Newsfeed: React.FC = () => {
   let {request, isLoading} = useHttpRequest(storiesUrl, RequestMethods.GET);
 
   useEffect(() => {
-    if (request.data) {
-      dispatch(newsSliceActions.setList(request.data.results));
+    if (request.data && isLoading) {
+      let formattedData = request.data.results.map((item: News) => {
+        return {
+          title: item.title,
+          abstract: item.abstract,
+          url: item.url,
+          uri: item.uri,
+          byline: item.byline,
+          published_date: item.published_date,
+          multimedia: item.multimedia,
+        };
+      });
+
+      dispatch(newsSliceActions.setList(formattedData));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionFilter, dispatch, request.data]);
 
   return (
@@ -41,7 +69,14 @@ const Newsfeed: React.FC = () => {
 
       <SearchArea />
 
-      <NewsList showLoader={isLoading} />
+      {isLoading && (
+        <Refresh>
+          <ActivityIndicator color={'#fff'} size={32} />
+          <LoaderText>Fetching top stories</LoaderText>
+        </Refresh>
+      )}
+
+      <NewsList />
     </Container>
   );
 };

@@ -3,7 +3,10 @@ import {Text, View} from 'react-native';
 import {News} from '../../../types/News';
 import {ArticleView, DetailsPreview, ThumbnailPreview, Title} from './styles';
 import {get_multimedia_by_format, MediaSize} from '../../../utils/multimedia';
-import {DEFAULT_TOUCHABLE_OPACITY} from '../../../config/widgets';
+import {
+  DEFAULT_IMAGE_URI,
+  DEFAULT_TOUCHABLE_OPACITY,
+} from '../../../config/widgets';
 import TimeAgo from 'react-timeago';
 
 interface IProps extends News {
@@ -16,7 +19,9 @@ const ArticleItem: React.FC<IProps> = (props: IProps) => {
 
   return (
     <ArticleView onPress={onPress} activeOpacity={DEFAULT_TOUCHABLE_OPACITY}>
-      <ThumbnailPreview source={{uri: mediaImage.url}} />
+      <ThumbnailPreview
+        source={{uri: mediaImage ? mediaImage.url : DEFAULT_IMAGE_URI}}
+      />
 
       <DetailsPreview>
         <Title numberOfLines={2}>{title}</Title>
