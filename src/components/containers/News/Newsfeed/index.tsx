@@ -39,6 +39,7 @@ const Newsfeed: React.FC = () => {
   const sectionFilter = useSelector(
     (state: RootState) => state.news.sectionFilter,
   );
+
   const dispatch = useDispatch();
 
   let storiesUrl = `${NYTIMES_API_STORIES_ENDPOINT}${sectionFilter}.json?api-key=${NYTIMES_API_KEY}`;

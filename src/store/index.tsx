@@ -14,12 +14,14 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+import {reducer as network} from 'react-native-offline';
 
 //Slices
 import {newsSlice} from './slices/news';
 
 const reducers = combineReducers({
   news: newsSlice.reducer,
+  network,
 });
 
 const persistConfig = {

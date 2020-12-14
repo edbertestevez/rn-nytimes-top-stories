@@ -16,16 +16,19 @@ import {persistor, store} from './store';
 import {ThemeProvider} from 'styled-components';
 import {defaultTheme} from './styles/theme';
 import {PersistGate} from 'redux-persist/integration/react';
+import {ReduxNetworkProvider} from 'react-native-offline';
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider theme={defaultTheme}>
-          <SafeAreaView style={styles.container}>
-            <AppNavigation />
-          </SafeAreaView>
-        </ThemeProvider>
+        <ReduxNetworkProvider>
+          <ThemeProvider theme={defaultTheme}>
+            <SafeAreaView style={styles.container}>
+              <AppNavigation />
+            </SafeAreaView>
+          </ThemeProvider>
+        </ReduxNetworkProvider>
       </PersistGate>
     </Provider>
   );

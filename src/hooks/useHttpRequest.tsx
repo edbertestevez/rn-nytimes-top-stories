@@ -1,6 +1,11 @@
 import Axios, {AxiosResponse} from 'axios';
 import {useState, useEffect} from 'react';
+import {ToastAndroid} from 'react-native';
+import {useSelector} from 'react-redux';
 import {RequestMethods} from '../constants/common';
+import {ERROR_NO_NETWORK_CONNECTION} from '../constants/errors';
+import {RootState} from '../store';
+import {isPlatformAndroid} from '../utils/common';
 
 interface IRequest {
   data: any | null;
@@ -8,6 +13,10 @@ interface IRequest {
 }
 
 const useHttpRequest = (url: string, method: string, body?: object) => {
+  const isConnected = useSelector(
+    (state: RootState) => state.network.isConnected,
+  );
+
   const [isLoading, setIsLoading] = useState(false);
   const [request, setRequest] = useState<IRequest>({
     data: null,
@@ -15,48 +24,60 @@ const useHttpRequest = (url: string, method: string, body?: object) => {
   });
 
   useEffect(() => {
-    let apiRequest = null;
+    if (isConnected) {
+      let apiRequest = null;
 
-    setIsLoading(true);
+      setIsLoading(true);
 
-    switch (method) {
-      case RequestMethods.POST: {
-        apiRequest = Axios.post(url, body);
-        break;
+      switch (method) {
+        case RequestMethods.POST: {
+          apiRequest = Axios.post(url, body);
+          break;
+        }
+        case RequestMethods.PATCH: {
+          apiRequest = Axios.patch(url, body);
+          break;
+        }
+        case RequestMethods.DELETE: {
+          apiRequest = Axios.delete(url);
+          break;
+        }
+        case RequestMethods.GET:
+        default: {
+          apiRequest = Axios.get(url);
+          break;
+        }
       }
-      case RequestMethods.PATCH: {
-        apiRequest = Axios.patch(url, body);
-        break;
-      }
-      case RequestMethods.DELETE: {
-        apiRequest = Axios.delete(url);
-        break;
-      }
-      case RequestMethods.GET:
-      default: {
-        apiRequest = Axios.get(url);
-        break;
+
+      apiRequest
+        ?.then((response: AxiosResponse<Response>) => {
+          setRequest({
+            data: response.data,
+            error: false,
+          });
+
+          setIsLoading(false);
+        })
+        .catch(() => {
+          setRequest({
+            data: null,
+            error: true,
+          });
+
+          setIsLoading(false);
+        });
+    } else {
+      if (isPlatformAndroid()) {
+        ToastAndroid.showWithGravityAndOffset(
+          ERROR_NO_NETWORK_CONNECTION,
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM,
+          0,
+          50,
+        );
       }
     }
-
-    apiRequest
-      ?.then((response: AxiosResponse<Response>) => {
-        setRequest({
-          data: response.data,
-          error: false,
-        });
-
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setRequest({
-          data: null,
-          error: true,
-        });
-
-        setIsLoading(false);
-      });
-  }, [url, method, body]);
+  }, [url, method, body, isConnected]);
 
   return {request, isLoading};
 };
