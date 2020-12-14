@@ -20,10 +20,6 @@ const Container = styled.View`
   flex: 1;
 `;
 
-const Loader = styled.ActivityIndicator`
-  margin-top: 16px;
-`;
-
 const Newsfeed: React.FC = () => {
   const sectionFilter = useSelector(
     (state: RootState) => state.news.sectionFilter,
@@ -42,9 +38,10 @@ const Newsfeed: React.FC = () => {
   return (
     <Container>
       <Sections />
+
       <SearchArea />
 
-      {isLoading ? <Loader color={'#000'} size={32} /> : <NewsList />}
+      <NewsList showLoader={isLoading} />
     </Container>
   );
 };

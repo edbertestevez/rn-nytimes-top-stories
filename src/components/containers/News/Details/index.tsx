@@ -46,7 +46,11 @@ const Details: React.FC<IProps> = (props) => {
       <Media resizeMode={'cover'} source={{uri: mediaImage.url}} />
 
       <Content>
-        {mediaImage.caption && <Caption>Caption: {mediaImage.caption}</Caption>}
+        {mediaImage.caption ? (
+          <Caption>Caption: {mediaImage.caption}</Caption>
+        ) : (
+          <React.Fragment />
+        )}
 
         <Title>{title}</Title>
         <InfoLabel>{byline}</InfoLabel>

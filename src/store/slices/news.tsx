@@ -2,17 +2,26 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {sectionKeys} from '../../constants/sections';
 import {News} from '../../types/News';
 
-interface INews {
-  list: Array<News>;
+export type TSectionNewsList = {
+  [key in sectionKeys]: Array<News> | [];
+};
+
+export interface INews {
+  sectionList: TSectionNewsList | {};
   sectionFilter: string;
   keywordFilter: string;
 }
 
 const initialState: INews = {
-  list: [],
+  sectionList: {},
   sectionFilter: sectionKeys.world,
   keywordFilter: '',
 };
+
+interface IPayload {
+  list: Array<News>;
+  sectionFilter: string;
+}
 
 export const newsSlice = createSlice({
   name: 'news',
@@ -22,8 +31,19 @@ export const newsSlice = createSlice({
     reset: (state) => {
       state = initialState;
     },
-    setList: (state, action: PayloadAction<Array<News>>) => {
-      state.list = action.payload;
+    setList: (state: INews, action: PayloadAction<IPayload>) => {
+      if (state.sectionList === {}) {
+        state.sectionList = {
+          [state.sectionFilter]: action.payload,
+        };
+      } else {
+        state.sectionList = {
+          ...state.sectionList,
+          [state.sectionFilter]: action.payload,
+        };
+      }
+
+      // state.list = [];
     },
     setSectionFilter: (state, action: PayloadAction<string>) => {
       state.sectionFilter = action.payload;
