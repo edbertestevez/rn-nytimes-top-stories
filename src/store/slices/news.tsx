@@ -49,6 +49,7 @@ export const newsSlice = createSlice({
       state.sectionFilter = action.payload;
     },
     setKeywordFilter: (state, action: PayloadAction<string>) => {
+      console.log('UPDATING => ', action.payload);
       state.keywordFilter = action.payload;
     },
     setLocationFilter: (state, action: PayloadAction<string>) => {

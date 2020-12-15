@@ -7,7 +7,7 @@ interface ILocationState {
 
 const defaultCountry = [
   {
-    label: 'All Location',
+    label: 'Location',
     value: '',
   },
 ];

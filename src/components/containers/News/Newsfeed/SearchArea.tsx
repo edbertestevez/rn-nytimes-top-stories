@@ -1,4 +1,4 @@
-import React, {ReactText} from 'react';
+import React, {ReactText, useState, useCallback} from 'react';
 import styled from 'styled-components/native';
 import TextField from '../../../common/TextField';
 import {View} from 'react-native';
@@ -7,6 +7,7 @@ import {RootState} from '../../../../store';
 import {INews, newsSliceActions} from '../../../../store/slices/news';
 import {defaultTheme} from '../../../../styles/theme';
 import SelectField from '../../../common/SelectField';
+import {debounce} from 'lodash';
 
 //Styled Definition
 const Container = styled.View`
@@ -27,8 +28,18 @@ const SearchArea: React.FC = React.memo(() => {
     (state: RootState) => state.location.countries,
   );
 
+  const [localSearch, setLocalSearch] = useState(keywordFilter || '');
+
+  const debouncedDispatch = useCallback(
+    debounce((search: string) => {
+      dispatch(newsSliceActions.setKeywordFilter(search));
+    }, 500),
+    [],
+  );
+
   const onKeywordChange = (search: string) => {
-    dispatch(newsSliceActions.setKeywordFilter(search));
+    setLocalSearch(search);
+    debouncedDispatch(search);
   };
 
   const onLocationChange = (location: ReactText) => {
@@ -46,7 +57,7 @@ const SearchArea: React.FC = React.memo(() => {
       <View style={{marginHorizontal: 4}} />
       <TextField
         onChangeText={onKeywordChange}
-        value={keywordFilter}
+        value={localSearch}
         placeholder={'Search keyword'}
         flexRatio={1}
       />

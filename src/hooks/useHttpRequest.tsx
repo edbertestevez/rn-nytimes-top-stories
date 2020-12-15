@@ -1,5 +1,5 @@
 import Axios, {AxiosResponse} from 'axios';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import {ToastAndroid} from 'react-native';
 import {useSelector} from 'react-redux';
 import {RequestMethods} from '../constants/common';
@@ -23,49 +23,53 @@ const useHttpRequest = (url: string, method: string, body?: object) => {
     error: false,
   });
 
+  const proceedRequest = useCallback(() => {
+    let apiRequest = null;
+
+    setIsLoading(true);
+
+    switch (method) {
+      case RequestMethods.POST: {
+        apiRequest = Axios.post(url, body);
+        break;
+      }
+      case RequestMethods.PATCH: {
+        apiRequest = Axios.patch(url, body);
+        break;
+      }
+      case RequestMethods.DELETE: {
+        apiRequest = Axios.delete(url);
+        break;
+      }
+      case RequestMethods.GET:
+      default: {
+        apiRequest = Axios.get(url);
+        break;
+      }
+    }
+
+    apiRequest
+      ?.then((response: AxiosResponse<Response>) => {
+        setRequest({
+          data: response.data,
+          error: false,
+        });
+
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setRequest({
+          data: null,
+          error: true,
+        });
+
+        setIsLoading(false);
+      });
+  }, [url, method, body]);
+
   useEffect(() => {
     if (isConnected) {
-      let apiRequest = null;
-
-      setIsLoading(true);
-
-      switch (method) {
-        case RequestMethods.POST: {
-          apiRequest = Axios.post(url, body);
-          break;
-        }
-        case RequestMethods.PATCH: {
-          apiRequest = Axios.patch(url, body);
-          break;
-        }
-        case RequestMethods.DELETE: {
-          apiRequest = Axios.delete(url);
-          break;
-        }
-        case RequestMethods.GET:
-        default: {
-          apiRequest = Axios.get(url);
-          break;
-        }
-      }
-
-      apiRequest
-        ?.then((response: AxiosResponse<Response>) => {
-          setRequest({
-            data: response.data,
-            error: false,
-          });
-
-          setIsLoading(false);
-        })
-        .catch(() => {
-          setRequest({
-            data: null,
-            error: true,
-          });
-
-          setIsLoading(false);
-        });
+      proceedRequest();
     } else {
       if (isPlatformAndroid()) {
         ToastAndroid.showWithGravityAndOffset(
@@ -77,7 +81,7 @@ const useHttpRequest = (url: string, method: string, body?: object) => {
         );
       }
     }
-  }, [url, method, body, isConnected]);
+  }, [isConnected, proceedRequest]);
 
   return {request, isLoading};
 };
