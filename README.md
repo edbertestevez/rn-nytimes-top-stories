@@ -3,6 +3,15 @@ Coding assessment for a job application
   - Currently developed and tested for Android only.
   - iOS - no tools available.
 
+## Screenshots
+<p float="left">
+  <img src="screenshots/load-stories.jpg" height="400"/>
+  <img src="screenshots/stories-filtered.jpg" height="400"/>
+  <img src="screenshots/load-article.jpg" height="400"/>
+  <img src="screenshots/articles-filtered.jpg" height="400"/>
+  <img src="screenshots/view-detailss.jpg" height="400"/>
+</p>
+
 ## Features
   - Filter Top Stories by Section
   - Search articles based on location, keyword, and section filters
@@ -26,7 +35,7 @@ Coding assessment for a job application
   - React Native Offline
   - React Timeago 
   - Lodash
-  - Unit Testing (Jest)
+  - Unit Testing (Jest/Enzyme/)
   
 ## Newsfeed (Top Stories / Article Search) Logic
   - If **Section** is selected with no **Location** and **Keyword** value, the **Top Stories API** or saved data is triggered.
