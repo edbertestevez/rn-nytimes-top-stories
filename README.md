@@ -12,6 +12,7 @@ Coding assessment for a job application
 ## API Used
   - Top Stories: https://developer.nytimes.com/docs/top-stories-product/1/overview
   - Article Search: https://developer.nytimes.com/docs/articlesearch-product/1/overview
+  - Rest Countries: https://restcountries.eu/rest/v2/all
   
 ## Additional Info
   - React Native
