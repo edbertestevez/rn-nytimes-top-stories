@@ -8,13 +8,15 @@ export type TSectionNewsList = {
 
 export interface INews {
   sectionList: TSectionNewsList | {};
+  articleSearchList: Array<News> | [];
   sectionFilter: string;
   keywordFilter: string;
   locationFilter: string;
 }
 
-const initialState: INews = {
+let initialState: INews = {
   sectionList: {},
+  articleSearchList: [],
   sectionFilter: sectionKeys.world,
   keywordFilter: '',
   locationFilter: '',
@@ -22,7 +24,7 @@ const initialState: INews = {
 
 interface IPayload {
   list: Array<News>;
-  sectionFilter: string;
+  sectionFilter?: string;
 }
 
 export const newsSlice = createSlice({
@@ -33,27 +35,31 @@ export const newsSlice = createSlice({
     reset: (state) => {
       state = initialState;
     },
+    //Top-Stories List
     setList: (state: INews, action: PayloadAction<IPayload>) => {
-      if (state.sectionList === {}) {
+      if (state.sectionList == {}) {
         state.sectionList = {
-          [state.sectionFilter]: action.payload,
+          [state.sectionFilter]: action.payload.list,
         };
       } else {
         state.sectionList = {
           ...state.sectionList,
-          [state.sectionFilter]: action.payload,
+          [state.sectionFilter]: action.payload.list,
         };
       }
+    },
+    //Article Search (Location/Keyword/Section) List
+    setArticleSearchList: (state: INews, action: PayloadAction<IPayload>) => {
+      state.articleSearchList = action.payload.list;
     },
     setSectionFilter: (state, action: PayloadAction<string>) => {
       state.sectionFilter = action.payload;
     },
     setKeywordFilter: (state, action: PayloadAction<string>) => {
-      console.log('UPDATING => ', action.payload);
-      state.keywordFilter = action.payload;
+      state.keywordFilter = action.payload || '';
     },
     setLocationFilter: (state, action: PayloadAction<string>) => {
-      state.locationFilter = action.payload;
+      state.locationFilter = action.payload || '';
     },
   },
 });

@@ -1,11 +1,15 @@
 import Axios, {AxiosResponse} from 'axios';
 import {useState, useEffect, useCallback} from 'react';
 import {ToastAndroid} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RequestMethods} from '../constants/common';
 import {ERROR_NO_NETWORK_CONNECTION} from '../constants/errors';
 import {RootState} from '../store';
 import {isPlatformAndroid} from '../utils/common';
+import {
+  checkInternetConnection,
+  offlineActionCreators,
+} from 'react-native-offline';
 
 interface IRequest {
   data: any | null;
@@ -13,9 +17,17 @@ interface IRequest {
 }
 
 const useHttpRequest = (url: string, method: string, body?: object) => {
+  const dispatch = useDispatch();
+
   const isConnected = useSelector(
     (state: RootState) => state.network.isConnected,
   );
+
+  const internetChecker = useCallback(async () => {
+    const connectionState = await checkInternetConnection();
+    const {connectionChange} = offlineActionCreators;
+    dispatch(connectionChange(connectionState));
+  }, [dispatch]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [request, setRequest] = useState<IRequest>({
@@ -48,6 +60,8 @@ const useHttpRequest = (url: string, method: string, body?: object) => {
       }
     }
 
+    console.log('CALLING API: ', url);
+
     apiRequest
       ?.then((response: AxiosResponse<Response>) => {
         setRequest({
@@ -66,6 +80,10 @@ const useHttpRequest = (url: string, method: string, body?: object) => {
         setIsLoading(false);
       });
   }, [url, method, body]);
+
+  useEffect(() => {
+    internetChecker();
+  }, [internetChecker]);
 
   useEffect(() => {
     if (isConnected) {

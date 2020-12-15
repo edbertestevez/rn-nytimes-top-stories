@@ -28,8 +28,12 @@ const Container = styled.View`
   flex: 1;
 `;
 
-const Refresh = styled.View`
+const ResultsArea = styled.View`
+  flex: 1;
   background-color: #77cfe8;
+`;
+
+const Refresh = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -48,14 +52,19 @@ const Newsfeed: React.FC = () => {
     (state: RootState) => state.news,
   );
 
+  const isConnected = useSelector(
+    (state: RootState) => state.network.isConnected,
+  );
+
   //Conditional URLs
   let storiesUrl = `${NYTIMES_API_STORIES_ENDPOINT}${sectionFilter}.json?api-key=${NYTIMES_API_KEY}`;
-  let articlesUrl = `${NYTIMES_API_SEARCH_ARTICLE_ENDPOINT}&fq=section_name:(${sectionFilter})${
-    !isNullEmptyOrUndefined(locationFilter) &&
-    ` AND glocations:(${locationFilter})`
-  }&q=${keywordFilter}`;
+  let articlesUrl = isNullEmptyOrUndefined(locationFilter)
+    ? `${NYTIMES_API_SEARCH_ARTICLE_ENDPOINT}&fq=section_name:(${sectionFilter})&q=${keywordFilter}`
+    : `${NYTIMES_API_SEARCH_ARTICLE_ENDPOINT}&fq=section_name:(${sectionFilter}) AND glocations:(${locationFilter})&q=${keywordFilter}`;
 
-  let hasFilter = locationFilter || keywordFilter;
+  let hasFilter =
+    !isNullEmptyOrUndefined(locationFilter) ||
+    !isNullEmptyOrUndefined(keywordFilter);
 
   let {request, isLoading} = useHttpRequest(
     hasFilter ? articlesUrl : storiesUrl,
@@ -75,46 +84,52 @@ const Newsfeed: React.FC = () => {
   }, [locationApi.request.data, dispatch]);
 
   useEffect(() => {
-    if (request.data && !isLoading) {
+    if (request.data && isConnected) {
       let formattedData;
 
-      if (!hasFilter) {
-        formattedData = request.data.results.map((item: News) => {
-          return {
-            title: item.title,
-            abstract: item.abstract,
-            url: item.url,
-            uri: item.uri,
-            byline: item.byline,
-            published_date: item.published_date,
-            multimedia: item.multimedia,
-          };
-        });
+      if (hasFilter) {
+        //Article API
+        if (request.data.response) {
+          formattedData = request.data.response.docs.map(
+            (item: ArticleSearch) => {
+              return {
+                title: item.headline.main,
+                abstract: item.abstract,
+                url: item.web_url,
+                uri: item.uri,
+                byline: item.byline.original,
+                published_date: item.pub_date,
+                multimedia: item.multimedia.map((media) => {
+                  let formatMultimedia = media;
+                  formatMultimedia.url = NYTIMES_SITE + media.url;
+                  formatMultimedia.format = media.subType;
+                  return formatMultimedia;
+                }),
+              };
+            },
+          );
+        }
+        dispatch(newsSliceActions.setArticleSearchList({list: formattedData}));
       } else {
-        formattedData = request.data.response.docs.map(
-          (item: ArticleSearch) => {
+        //Top-Stories API
+        if (request.data.results) {
+          formattedData = request.data.results.map((item: News) => {
             return {
-              title: item.headline.main,
+              title: item.title,
               abstract: item.abstract,
-              url: item.web_url,
+              url: item.url,
               uri: item.uri,
-              byline: item.byline.original,
-              published_date: item.pub_date,
-              multimedia: item.multimedia.map((media) => {
-                let formatMultimedia = media;
-                formatMultimedia.url = NYTIMES_SITE + media.url;
-                formatMultimedia.format = media.subType;
-                return formatMultimedia;
-              }),
+              byline: item.byline,
+              published_date: item.published_date,
+              multimedia: item.multimedia,
             };
-          },
-        );
+          });
+        }
+        dispatch(newsSliceActions.setList({list: formattedData}));
       }
-
-      dispatch(newsSliceActions.setList(formattedData));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sectionFilter, dispatch, request.data]);
+  }, [sectionFilter, locationFilter, dispatch, request.data, hasFilter]);
 
   return (
     <Container>
@@ -122,16 +137,18 @@ const Newsfeed: React.FC = () => {
 
       <SearchArea />
 
-      {isLoading && (
-        <Refresh>
-          <ActivityIndicator color={'#fff'} size={32} />
-          <LoaderText>
-            Fetching {hasFilter ? 'articles' : 'top stories'}
-          </LoaderText>
-        </Refresh>
-      )}
-
-      <NewsList />
+      <ResultsArea>
+        {isLoading ? (
+          <Refresh>
+            <ActivityIndicator color={'#fff'} size={32} />
+            <LoaderText>
+              Fetching {hasFilter ? 'articles' : 'top stories'}
+            </LoaderText>
+          </Refresh>
+        ) : (
+          <NewsList />
+        )}
+      </ResultsArea>
     </Container>
   );
 };

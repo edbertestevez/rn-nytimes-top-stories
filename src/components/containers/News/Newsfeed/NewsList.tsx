@@ -26,17 +26,29 @@ const styles = StyleSheet.create({
 const NewsList: React.FC = React.memo(() => {
   const newsData: INews = useSelector((state: RootState) => state.news);
 
-  const {sectionList, sectionFilter, keywordFilter} = newsData;
+  const {
+    sectionList,
+    articleSearchList,
+    locationFilter,
+    sectionFilter,
+    keywordFilter,
+  } = newsData;
 
-  const searchResult = isNullEmptyOrUndefined(sectionList)
-    ? []
-    : isNullEmptyOrUndefined((sectionList as any)[sectionFilter])
-    ? []
-    : (sectionList as any)[sectionFilter].filter(
-        (news: News) =>
-          news.title.toLowerCase().includes(keywordFilter.toLowerCase()) ||
-          news.abstract.toLowerCase().includes(keywordFilter.toLowerCase()),
-      );
+  let hasFilter =
+    !isNullEmptyOrUndefined(locationFilter) ||
+    !isNullEmptyOrUndefined(keywordFilter);
+
+  let searchResult = [];
+
+  if (hasFilter) {
+    searchResult = articleSearchList || [];
+  } else {
+    searchResult = isNullEmptyOrUndefined(sectionList)
+      ? []
+      : isNullEmptyOrUndefined((sectionList as any)[sectionFilter])
+      ? []
+      : (sectionList as any)[sectionFilter];
+  }
 
   return (
     <Container>
