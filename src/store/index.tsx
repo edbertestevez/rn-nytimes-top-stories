@@ -18,9 +18,11 @@ import {reducer as network} from 'react-native-offline';
 
 //Slices
 import {newsSlice} from './slices/news';
+import {locationSlice} from './slices/location';
 
 const reducers = combineReducers({
   news: newsSlice.reducer,
+  location: locationSlice.reducer,
   network,
 });
 

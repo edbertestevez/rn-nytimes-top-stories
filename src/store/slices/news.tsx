@@ -10,12 +10,14 @@ export interface INews {
   sectionList: TSectionNewsList | {};
   sectionFilter: string;
   keywordFilter: string;
+  locationFilter: string;
 }
 
 const initialState: INews = {
   sectionList: {},
   sectionFilter: sectionKeys.world,
   keywordFilter: '',
+  locationFilter: '',
 };
 
 interface IPayload {
@@ -48,6 +50,9 @@ export const newsSlice = createSlice({
     },
     setKeywordFilter: (state, action: PayloadAction<string>) => {
       state.keywordFilter = action.payload;
+    },
+    setLocationFilter: (state, action: PayloadAction<string>) => {
+      state.locationFilter = action.payload;
     },
   },
 });

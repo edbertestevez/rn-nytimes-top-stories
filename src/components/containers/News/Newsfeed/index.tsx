@@ -10,12 +10,15 @@ import useHttpRequest from '../../../../hooks/useHttpRequest';
 import {
   NYTIMES_API_KEY,
   NYTIMES_API_STORIES_ENDPOINT,
+  REST_COUNTRIES_ENDPOINT,
 } from '../../../../config/requests';
 import {RequestMethods} from '../../../../constants/common';
 import {RootState} from '../../../../store';
 import {newsSliceActions} from '../../../../store/slices/news';
 import SearchArea from './SearchArea';
 import {News} from '../../../../types/News';
+import {ISelectItem} from '../../../../types/Input';
+import {locationSliceActions} from '../../../../store/slices/location';
 
 //Styled Definition
 const Container = styled.View`
@@ -36,14 +39,26 @@ const LoaderText = styled.Text`
 `;
 
 const Newsfeed: React.FC = () => {
+  const dispatch = useDispatch();
+
   const sectionFilter = useSelector(
     (state: RootState) => state.news.sectionFilter,
   );
 
-  const dispatch = useDispatch();
-
   let storiesUrl = `${NYTIMES_API_STORIES_ENDPOINT}${sectionFilter}.json?api-key=${NYTIMES_API_KEY}`;
   let {request, isLoading} = useHttpRequest(storiesUrl, RequestMethods.GET);
+  let locationApi = useHttpRequest(REST_COUNTRIES_ENDPOINT, RequestMethods.GET);
+
+  useEffect(() => {
+    if (locationApi.request.data) {
+      let countries: Array<ISelectItem> = [];
+      locationApi.request.data.map((item) =>
+        countries.push({label: item.name, value: item.name}),
+      );
+
+      dispatch(locationSliceActions.setCountries({countries}));
+    }
+  }, [locationApi.request.data, dispatch]);
 
   useEffect(() => {
     if (request.data && isLoading) {
