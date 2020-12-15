@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SectionButton /> renders correctly 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#FFFFFF",
+      "borderColor": "#918AE4",
+      "borderRadius": 8,
+      "borderWidth": 1,
+      "height": 40,
+      "justifyContent": "center",
+      "marginBottom": 8,
+      "marginRight": 16,
+      "opacity": 1,
+      "paddingHorizontal": 12,
+      "width": 160,
+    }
+  }
+>
+  <Text
+    selected={true}
+    style={
+      Array [
+        Object {
+          "color": "#918AE4",
+          "fontSize": 16,
+          "fontWeight": "700",
+        },
+      ]
+    }
+  >
+    Test
+  </Text>
+</View>
+`;
