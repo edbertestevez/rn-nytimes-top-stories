@@ -5,7 +5,7 @@ Coding assessment for a job application
 
 ## Features
   - Filter Top Stories by Section
-  - Search articles based on location, feyword, and section filters
+  - Search articles based on location, keyword, and section filters
   - View article details
   - Offline support (Loaded data)
 
@@ -28,10 +28,10 @@ Coding assessment for a job application
   - Unit Testing (Jest)
   
 ## Newsfeed (Top Stories / Article Search) Logic
-  - If 'Section' is selected with no 'Location' and 'Keyword' value, the Top Stories API or saved data is triggered.
-  - If 'Section' is selected and either 'Location' and 'Keyword' value is set, the Article Search API is triggered.
+  - If **Section** is selected with no **Location** and **Keyword** value, the **Top Stories API** or saved data is triggered.
+  - If **Section** is selected and either *Location** and **Keyword** value is set, the **Article Search API** is triggered.
   - If offline, only the previously cached/loaded data for each section is persisted on the application
-  - To view the Top Stories data, 'Location' field should be set to 'Location', and 'Keyword' field should be empty.
+  - To view the Top Stories data, **Location** field should be set to 'Location', and **Keyword** field should be empty.
   
 ## Local Setup
 ```bash
