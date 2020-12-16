@@ -35,7 +35,7 @@ Coding assessment for a job application
   - React Native Offline
   - React Timeago 
   - Lodash
-  - Unit Testing (Jest/Enzyme/)
+  - Unit Testing (Jest/Enzyme)
   
 ## Newsfeed (Top Stories / Article Search) Logic
   - If **Section** is selected with no **Location** and **Keyword** value, the **Top Stories API** or saved data is triggered.
@@ -56,6 +56,9 @@ npm install
 4. Run the application
 npm run android     # Android
 npm run ios         # IOS
+
+5. Test the application
+npm run test
 ```
 
 ## Folder Structure
