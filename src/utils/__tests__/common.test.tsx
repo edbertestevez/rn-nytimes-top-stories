@@ -1,13 +1,9 @@
-import Enzyme from 'enzyme';
 import {
   isNullEmptyOrUndefined,
   isPlatformAndroid,
   isPlatformIOS,
 } from '../common';
 import {Platform} from 'react-native';
-import Adapter from 'enzyme-adapter-react-16';
-
-Enzyme.configure({adapter: new Adapter()});
 
 const setPlatform = (platform: 'android' | 'ios') => {
   Object.defineProperty(Platform, 'OS', {

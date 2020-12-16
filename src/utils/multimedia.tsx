@@ -17,5 +17,5 @@ export const get_multimedia_by_format = (
     return null;
   }
 
-  return media.filter((item: IMultimedia) => item.format === size)[0];
+  return media.filter((item: IMultimedia) => item.format === size)[0] || null;
 };
