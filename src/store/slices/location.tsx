@@ -1,18 +1,18 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {ISelectItem} from '../../types/Input';
 
-interface ILocationState {
+export interface ILocationState {
   countries: Array<ISelectItem>;
 }
 
-const defaultCountry = [
+export const defaultCountry = [
   {
     label: 'Location',
     value: '',
   },
 ];
 
-const initialState: ILocationState = {
+export const initialState: ILocationState = {
   countries: defaultCountry,
 };
 

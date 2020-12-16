@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[Redux] Location slice testing creates <location>/reset when dispatch is successful 1`] = `
+Array [
+  Object {
+    "payload": undefined,
+    "type": "location/reset",
+  },
+]
+`;
+
+exports[`[Redux] Location slice testing creates <location>/setCountries when dispatch is successful 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "countries": Array [
+        Object {
+          "label": "Country 1",
+          "value": "country1",
+        },
+        Object {
+          "label": "Country 2",
+          "value": "country2",
+        },
+      ],
+    },
+    "type": "location/setCountries",
+  },
+]
+`;
