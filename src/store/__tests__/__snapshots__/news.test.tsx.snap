@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`[Redux] News slice testing creates <news>/reset when dispatch is successful 1`] = `
+Array [
+  Object {
+    "payload": undefined,
+    "type": "news/reset",
+  },
+]
+`;
+
+exports[`[Redux] News slice testing creates <news>/setArticleSearchList when dispatch is successful 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "list": Array [
+        Object {
+          "abstract": "Test",
+          "byline": "Test",
+          "multimedia": Array [
+            Object {
+              "caption": "Caption",
+              "format": "superJumbo",
+              "type": "image",
+              "url": "https://static01.nyt.com/images/2020/12/15/arts/best-comedy-2020-topart/best-comedy-2020-topart-superJumbo.jpg",
+            },
+            Object {
+              "caption": "Caption",
+              "format": "Standard Thumbnail",
+              "type": "image",
+              "url": "https://static01.nyt.com/images/2020/12/15/arts/best-comedy-2020-topart/best-comedy-2020-topart-thumbStandard.jpg",
+            },
+            Object {
+              "caption": "Caption",
+              "format": "thumbLarge",
+              "type": "image",
+              "url": "https://static01.nyt.com/images/2020/12/15/arts/best-comedy-2020-topart/best-comedy-2020-topart-thumbLarge.jpg",
+            },
+            Object {
+              "caption": "Caption",
+              "format": "mediumThreeByTwo210",
+              "type": "image",
+              "url": "https://static01.nyt.com/images/2020/12/15/arts/best-comedy-2020-topart/best-comedy-2020-topart-mediumThreeByTwo210.jpg",
+            },
+          ],
+          "published_date": 2020-12-16T06:46:53.375Z,
+          "title": "Test",
+          "uri": "Test",
+          "url": "Test",
+        },
+      ],
+    },
+    "type": "news/setArticleSearchList",
+  },
+]
+`;
+
+exports[`[Redux] News slice testing creates <news>/setKeywordFilter when dispatch is successful 1`] = `
+Array [
+  Object {
+    "payload": "Test",
+    "type": "news/setKeywordFilter",
+  },
+]
+`;
+
+exports[`[Redux] News slice testing creates <news>/setList when dispatch is successful 1`] = `
+Array [
+  Object {
+    "payload": Object {
+      "list": Array [
+        Object {
+          "abstract": "Test",
+          "byline": "Test",
+          "multimedia": Array [
+            Object {
+              "caption": "Caption",
+              "format": "superJumbo",
+              "type": "image",
+              "url": "https://static01.nyt.com/images/2020/12/15/arts/best-comedy-2020-topart/best-comedy-2020-topart-superJumbo.jpg",
+            },
+            Object {
+              "caption": "Caption",
+              "format": "Standard Thumbnail",
+              "type": "image",
+              "url": "https://static01.nyt.com/images/2020/12/15/arts/best-comedy-2020-topart/best-comedy-2020-topart-thumbStandard.jpg",
+            },
+            Object {
+              "caption": "Caption",
+              "format": "thumbLarge",
+              "type": "image",
+              "url": "https://static01.nyt.com/images/2020/12/15/arts/best-comedy-2020-topart/best-comedy-2020-topart-thumbLarge.jpg",
+            },
+            Object {
+              "caption": "Caption",
+              "format": "mediumThreeByTwo210",
+              "type": "image",
+              "url": "https://static01.nyt.com/images/2020/12/15/arts/best-comedy-2020-topart/best-comedy-2020-topart-mediumThreeByTwo210.jpg",
+            },
+          ],
+          "published_date": 2020-12-16T06:46:53.375Z,
+          "title": "Test",
+          "uri": "Test",
+          "url": "Test",
+        },
+      ],
+    },
+    "type": "news/setList",
+  },
+]
+`;
+
+exports[`[Redux] News slice testing creates <news>/setLocationFilter when dispatch is successful 1`] = `
+Array [
+  Object {
+    "payload": "Test",
+    "type": "news/setLocationFilter",
+  },
+]
+`;
+
+exports[`[Redux] News slice testing creates <news>/setSectionFilter when dispatch is successful 1`] = `
+Array [
+  Object {
+    "payload": "Test",
+    "type": "news/setSectionFilter",
+  },
+]
+`;

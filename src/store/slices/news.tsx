@@ -14,7 +14,7 @@ export interface INews {
   locationFilter: string;
 }
 
-let initialState: INews = {
+export let initialState: INews = {
   sectionList: {},
   articleSearchList: [],
   sectionFilter: sectionKeys.world,
